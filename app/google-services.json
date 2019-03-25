@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "916630071063",
+    "firebase_url": "https://cure-it.firebaseio.com",
+    "project_id": "cure-it",
+    "storage_bucket": "cure-it.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916630071063:android:18e81d63474ea0e0",
+        "android_client_info": {
+          "package_name": "com.example.cureit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916630071063-62p9kmq49u8uptnr1s95b9mfd9130606.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cureit",
+            "certificate_hash": "6f588f0aeffedade3553a930e738672333a3c68c"
+          }
+        },
+        {
+          "client_id": "916630071063-r1dp59k4b1b5ehajsa0l2i5a8gcvh4f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnf-hDLkL0bUtGOkT9dh45edNK7zrAQOU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916630071063-r1dp59k4b1b5ehajsa0l2i5a8gcvh4f0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
