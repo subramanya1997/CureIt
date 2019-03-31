@@ -4,27 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".medicalrecords">
+    tools:context=".add_records">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src=""/>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/addRecord"
+            android:id="@+id/doneAddRecordButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentEnd="false"
             android:layout_alignParentRight="true"
             android:clickable="true"
             android:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_add_black_24dp"
+            android:src="@drawable/ic_done_black_24dp"
             app:elevation="6dp"
             app:fabSize="normal" />
+
     </RelativeLayout>
-
-
 
 </android.support.constraint.ConstraintLayout>

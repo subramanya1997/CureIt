@@ -31,6 +31,8 @@ public class login extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
+    private valadity valid = new valadity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -88,19 +90,33 @@ public class login extends AppCompatActivity {
         String password = mPasswordField.getText().toString();
 
         if (TextUtils.isEmpty( email ) || TextUtils.isEmpty( password )){
-            Toast.makeText( login.this, "Fields are empty", Toast.LENGTH_LONG ).show();
             mProgressDialog.dismiss();
+            if (TextUtils.isEmpty( email )){
+                Toast.makeText( login.this, "Email is required.", Toast.LENGTH_LONG ).show();
+            }else if (TextUtils.isEmpty( password )){
+                Toast.makeText( login.this, "Password is required.", Toast.LENGTH_LONG ).show();
+            }
+            else {
+                Toast.makeText( login.this, "Fields are missing.", Toast.LENGTH_LONG ).show();
+            }
+
         }else {
-            mAuth.signInWithEmailAndPassword( email,password ).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()){
-                        Toast.makeText( login.this, "No Account found. Sign up please..", Toast.LENGTH_LONG ).show();
-                        startActivity(new Intent(login.this, signup.class));
-                        mProgressDialog.dismiss();
+            if(valid.checkEmail( email )){
+                mAuth.signInWithEmailAndPassword( email,password ).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()){
+                            Toast.makeText( login.this, "No Account found. Sign up please..", Toast.LENGTH_LONG ).show();
+                            startActivity(new Intent(login.this, signup.class));
+                            mProgressDialog.dismiss();
+                        }
                     }
-                }
-            } );
+                } );
+            }else {
+                mProgressDialog.dismiss();
+                Toast.makeText( login.this, "Enter a valid email.", Toast.LENGTH_LONG ).show();
+            }
         }
     }
+
 }

@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Continuation;
@@ -86,6 +88,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
         mEditDOBFieldTextProfile = (TextView) findViewById( R.id.editDobFieldTextProfile );
         mEditBloodGroupFieldTextProfile = (EditText) findViewById( R.id.editBloodGroupFieldTextProfile );
         mEditAccountTypeFieldTextProfile = (EditText) findViewById( R.id.editAccountTypeFieldTextProfile );
+
 
         mDoneEditProfileButton = (FloatingActionButton) findViewById( R.id.doneEditProfileButton );
 
@@ -185,7 +188,6 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
     }
 
     private void addProfile() {
-
         mProgress.setMessage( "Updateing..." );
         mProgress.show();
 
@@ -199,7 +201,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
 
         if(TextUtils.isEmpty( fullname ) || TextUtils.isEmpty( phone_no ) || TextUtils.isEmpty( address )
                 || TextUtils.isEmpty( gender ) || TextUtils.isEmpty( blood_group ) || TextUtils.isEmpty( dob )
-                || TextUtils.isEmpty( account_type ) || imageUri == null ){
+                || TextUtils.isEmpty( account_type ) || mEditProfilePicture == null ){
 
             mProgress.setMessage( "Empty..." );
             mProgress.dismiss();
