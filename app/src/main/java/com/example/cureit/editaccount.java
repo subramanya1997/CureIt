@@ -201,7 +201,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
 
         if(TextUtils.isEmpty( fullname ) || TextUtils.isEmpty( phone_no ) || TextUtils.isEmpty( address )
                 || TextUtils.isEmpty( gender ) || TextUtils.isEmpty( blood_group ) || TextUtils.isEmpty( dob )
-                || TextUtils.isEmpty( account_type ) || mEditProfilePicture == null ){
+                || TextUtils.isEmpty( account_type ) ){
 
             mProgress.setMessage( "Empty..." );
             mProgress.dismiss();
