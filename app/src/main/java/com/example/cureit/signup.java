@@ -78,6 +78,11 @@ public class signup extends AppCompatActivity {
         String email = mEmailFieldReg.getText().toString().trim();
         String password = mPasswordFieldReg.getText().toString().trim();
 
+        if(password.length() < 5){
+            mProgress.dismiss();
+            Toast.makeText( signup.this, "Password needs to be atleast 6 characters.", Toast.LENGTH_LONG ).show();
+        }
+
         if (TextUtils.isEmpty( username ) || TextUtils.isEmpty( email ) || TextUtils.isEmpty( password ) ){
             mProgress.dismiss();
             if (TextUtils.isEmpty( email )){
