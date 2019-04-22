@@ -7,11 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -61,10 +61,6 @@ public class medicalrecords extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Log.v("abc", "1");
-        Log.v("abc", "1");
-
-
 
         FirebaseRecyclerOptions<records> options = new FirebaseRecyclerOptions.Builder<records>()
                 .setQuery(mDatabase, records.class)
@@ -74,12 +70,22 @@ public class medicalrecords extends AppCompatActivity {
                 options
         ) {
             @Override
-            protected void onBindViewHolder(@NonNull recordsViewHolder holder, int position, @NonNull records model) {
+            protected void onBindViewHolder(@NonNull recordsViewHolder holder, final int position, @NonNull records model) {
+
+                final String recordKey = getRef( position ).getKey();
 
                 holder.setDescription( model.getDescription());
                 holder.setDate( model.getDate() );
                 holder.setDoctorsName( model.getDoctorsName() );
 
+                holder.mView.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent singleReportIntent = new Intent( medicalrecords.this, recordSingleActivity.class );
+                        singleReportIntent.putExtra( "recordID", recordKey );
+                        startActivity( singleReportIntent );
+                    }
+                } );
             }
 
             @NonNull

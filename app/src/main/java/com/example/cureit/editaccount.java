@@ -96,17 +96,17 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String username = dataSnapshot.child( "Username" ).getValue(String.class);
+                String username = dataSnapshot.child( "username" ).getValue(String.class);
                 mEditUsernameText.setText( username );
-                if(dataSnapshot.hasChild( "Full Name" )){
-                    String profilepicture = dataSnapshot.child( "Profile Picture" ).getValue(String.class);
-                    String fullname = dataSnapshot.child( "Full Name" ).getValue(String.class);
-                    String phonenumber = dataSnapshot.child( "Phone Number" ).getValue(String.class);
-                    String address = dataSnapshot.child( "Address" ).getValue(String.class);
-                    String gender = dataSnapshot.child( "Gender" ).getValue(String.class);
-                    String bloodgroup = dataSnapshot.child( "Blood Group" ).getValue(String.class);
+                if(dataSnapshot.hasChild( "fullName" )){
+                    String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
+                    String fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
+                    String phonenumber = dataSnapshot.child( "phoneNumber" ).getValue(String.class);
+                    String address = dataSnapshot.child( "address" ).getValue(String.class);
+                    String gender = dataSnapshot.child( "gender" ).getValue(String.class);
+                    String bloodgroup = dataSnapshot.child( "bloodGroup" ).getValue(String.class);
                     String dob = dataSnapshot.child( "DOB" ).getValue(String.class);
-                    String accounttype = dataSnapshot.child( "Account Type" ).getValue(String.class);
+                    String accounttype = dataSnapshot.child( "accountType" ).getValue(String.class);
                     mEditFullNameText.setText( fullname );
                     mEditPhoneNumberFieldTextProfile.setText( phonenumber );
                     mEditAddressFieldTextProfile.setText( address );
@@ -209,7 +209,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
 
         } else{
             user_id = mAuth.getCurrentUser().getUid();
-            final StorageReference filepath = mStorage.child( user_id ).child("Profile Picture");
+            final StorageReference filepath = mStorage.child( user_id ).child("profilePicture");
 
             UploadTask uploadTask = filepath.putFile( imageUri );
             Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -230,14 +230,14 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
                         String profile_picture_link = downloadUri.toString();
 
                         DatabaseReference account = mDatabase;
-                        account.child( "Profile Picture" ).setValue( profile_picture_link );
-                        account.child( "Full Name" ).setValue( fullname );
-                        account.child( "Phone Number" ).setValue( phone_no );
-                        account.child( "Address" ).setValue( address );
-                        account.child( "Gender" ).setValue( gender );
-                        account.child( "Blood Group" ).setValue( blood_group );
+                        account.child( "profilePicture" ).setValue( profile_picture_link );
+                        account.child( "fullName" ).setValue( fullname );
+                        account.child( "phoneNumber" ).setValue( phone_no );
+                        account.child( "address" ).setValue( address );
+                        account.child( "gender" ).setValue( gender );
+                        account.child( "bloodGroup" ).setValue( blood_group );
                         account.child( "DOB" ).setValue( dob );
-                        account.child( "Account Type" ).setValue( account_type );
+                        account.child( "accountType" ).setValue( account_type );
                         if(intent !=null)
                         {
                             String strdata = intent.getExtras().getString("activity");

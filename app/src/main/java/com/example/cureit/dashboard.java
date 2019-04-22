@@ -65,8 +65,8 @@ public class dashboard extends AppCompatActivity {
         mDatabase.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String username = dataSnapshot.child( "Username" ).getValue(String.class);
-                String profilepicture = dataSnapshot.child( "Profile Picture" ).getValue(String.class);
+                String username = dataSnapshot.child( "username" ).getValue(String.class);
+                String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
                 mUsername.setText( username );
                 Picasso.get().load( profilepicture ).fit().centerCrop().into( mPicture );
             }

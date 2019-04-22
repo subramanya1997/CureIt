@@ -105,7 +105,7 @@ public class signup extends AppCompatActivity {
                         mProgress.dismiss();
                         String user_id = mAuth.getCurrentUser().getUid();
                         DatabaseReference current_user_db = mDatabase.child( user_id );
-                        current_user_db.child( "Username" ).setValue( username );
+                        current_user_db.child( "username" ).setValue( username );
                         Intent intent = new Intent(  signup.this, editaccount.class);
                         intent.putExtra( "activity", "signup");
                         startActivity(intent);
