@@ -8,38 +8,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="20dp">
 
-        <LinearLayout
-            android:id="@+id/searchBar"
+        <EditText
+            android:padding="20dp"
+            android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="20dp">
+            android:hint="Search"/>
 
-            <EditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text=""
-                android:hint="Search"
-                android:textColor="#000000"
-                android:textSize="18dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:background="@color/input_outline" />
-        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/search"
             android:id="@+id/searchField"
-            android:layout_below="@+id/searchBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp">
+            android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>

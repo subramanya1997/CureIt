@@ -59,6 +59,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
     private FirebaseAuth mAuth;
     private FirebaseUser mCureentUser;
     private Intent intent;
+    private String username;
 
 
     Uri imageUri = null;
@@ -96,7 +97,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String username = dataSnapshot.child( "username" ).getValue(String.class);
+                username = dataSnapshot.child( "username" ).getValue(String.class);
                 mEditUsernameText.setText( username );
                 if(dataSnapshot.hasChild( "fullName" )){
                     String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
@@ -238,6 +239,7 @@ public class editaccount extends AppCompatActivity implements DatePickerDialog.O
                         account.child( "bloodGroup" ).setValue( blood_group );
                         account.child( "DOB" ).setValue( dob );
                         account.child( "accountType" ).setValue( account_type );
+                        account.child( "accountType_username" ).setValue( account_type+"_"+username );
                         if(intent !=null)
                         {
                             String strdata = intent.getExtras().getString("activity");
