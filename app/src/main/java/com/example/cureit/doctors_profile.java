@@ -32,6 +32,8 @@ public class doctors_profile extends AppCompatActivity {
 
     private String doctorsID;
     private String user_id;
+    String docUsername, docFullname, docAccountType_Username;
+    String username, fullname, accountType_username;
 
     private ProgressDialog mProgress;
 
@@ -94,14 +96,15 @@ public class doctors_profile extends AppCompatActivity {
         mDocDatabase.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String username = dataSnapshot.child( "username" ).getValue(String.class);
+                docUsername = dataSnapshot.child( "username" ).getValue(String.class);
                 String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
-                String fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
+                docFullname = dataSnapshot.child( "fullName" ).getValue(String.class);
                 String phonenumber = dataSnapshot.child( "phoneNumber" ).getValue(String.class);
                 String address = dataSnapshot.child( "address" ).getValue(String.class);
                 String gender = dataSnapshot.child( "gender" ).getValue(String.class);
-                mUsernameText.setText( username );
-                mFullNameText.setText( fullname );
+                docAccountType_Username = dataSnapshot.child( "accountType_username" ).getValue(String.class);
+                mUsernameText.setText( docUsername );
+                mFullNameText.setText( docFullname );
                 mPhoneNumberFieldTextProfile.setText( phonenumber );
                 mAddressFieldTextProfile.setText( address );
                 mGenderFieldTextProfile.setText( gender );
@@ -124,15 +127,31 @@ public class doctors_profile extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat( "HH:mm:ss" );
         String currentTime = format.format( calendar.getTime() );
 
+        DatabaseReference mUserData = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( user_id );
+
+        mUserData.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                username = dataSnapshot.child( "username" ).getValue(String.class);
+                fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
+                accountType_username = dataSnapshot.child( "accountType_username" ).getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+
         if (mAppointment.getText() == "Get Appointment"){
             mDatabase.child( doctorsID ).child( user_id ).child( "currentTime" ).setValue( currentTime );
-            mDatabase.child( doctorsID ).child( user_id ).child( "username" ).setValue( "Username" );
-            mDatabase.child( doctorsID ).child( user_id ).child( "accountType_username" ).setValue( "accountType_username" );
-            mDatabase.child( doctorsID ).child( user_id ).child( "fullname" ).setValue( "Fullname" );
+            mDatabase.child( doctorsID ).child( user_id ).child( "username" ).setValue( username );
+            mDatabase.child( doctorsID ).child( user_id ).child( "accountType_username" ).setValue( accountType_username );
+            mDatabase.child( doctorsID ).child( user_id ).child( "fullName" ).setValue( fullname );
             mDatabase.child( user_id ).child( doctorsID ).child( "currentTime" ).setValue( currentTime );
-            mDatabase.child( user_id ).child( doctorsID ).child( "username" ).setValue( "Username" );
-            mDatabase.child( user_id ).child( doctorsID ).child( "accountType_username" ).setValue( "accountType_username" );
-            mDatabase.child( user_id ).child( doctorsID ).child( "fullname" ).setValue( "Fullname" );
+            mDatabase.child( user_id ).child( doctorsID ).child( "username" ).setValue( docUsername );
+            mDatabase.child( user_id ).child( doctorsID ).child( "accountType_username" ).setValue( docAccountType_Username );
+            mDatabase.child( user_id ).child( doctorsID ).child( "fullName" ).setValue( docFullname );
 
         }else{
             mDatabase.child( doctorsID ).child( user_id ).removeValue();

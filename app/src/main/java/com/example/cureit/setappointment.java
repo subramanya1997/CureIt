@@ -76,7 +76,7 @@ public class setappointment extends AppCompatActivity {
 
     private void searchDoctors(String searchText){
 
-        Query firebaseSearchQuery = mDatabase.orderByChild( "accountType_username" ).startAt( "Doctor_@" + searchText ).endAt( "General_@" + searchText + "\uf8ff");
+        Query firebaseSearchQuery = mDatabase.orderByChild( "accountType_username" ).startAt( "Doctor_@" + searchText ).endAt( "Doctor_@" + searchText + "\uf8ff");
 
         FirebaseRecyclerOptions<accounts> options = new FirebaseRecyclerOptions.Builder<accounts>()
                 .setQuery(firebaseSearchQuery, accounts.class)
@@ -121,7 +121,7 @@ public class setappointment extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference mAppointment = FirebaseDatabase.getInstance().getReference().child( "Appointment" );
+        DatabaseReference mAppointment = FirebaseDatabase.getInstance().getReference().child( "Appointment" ).child( user_id );
         FirebaseRecyclerOptions<accounts> options = new FirebaseRecyclerOptions.Builder<accounts>()
                 .setQuery(mAppointment, accounts.class)
                 .build();
