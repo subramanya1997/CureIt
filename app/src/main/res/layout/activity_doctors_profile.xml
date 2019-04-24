@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".doctors_profile">
+
+    <RelativeLayout
+        android:id="@+id/toolBar123"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grad">
+
+        <RelativeLayout
+            android:id="@+id/profilePictureProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/circle_border">
+
+            <ImageView
+                android:id="@+id/docProfilePicture"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/circle"
+                android:padding="3dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_launcher_round" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/docFullNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profilePictureProfile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Full Name"
+            android:textColor="@color/white"
+            android:textSize="26dp" />
+
+        <TextView
+            android:id="@+id/docUsernameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/docFullNameText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Username"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolBar123">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Phone Number-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Phone"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/docPhoneNumberFieldTextProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="+91 000-000-0000"
+                        android:textColor="#000000"
+                        android:textSize="18dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/input_outline"/>
+
+
+                </LinearLayout>
+                <!--Address-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Address"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/docAddressFieldTextProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="No 1 blah,blah,blah,blah"
+                        android:textColor="#000000"
+                        android:textSize="18dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/input_outline"/>
+
+
+                </LinearLayout>
+                <!--Gender-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Gender"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/docGenderFieldTextProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Male"
+                        android:textColor="#000000"
+                        android:textSize="18dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/input_outline"/>
+
+                </LinearLayout>
+                <!--appointment-->
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/appointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:background=" @drawable/button"
+                        android:text="Appointment"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -3,7 +3,6 @@ package com.example.cureit;
 public class accounts {
 
     private String username;
-    private String accountType;
     private String fullName;
     private String accountType_username;
 
@@ -13,7 +12,6 @@ public class accounts {
 
     public accounts(String username, String accountType, String fullName, String accountType_username) {
         this.username = username;
-        this.accountType = accountType;
         this.fullName = fullName;
         this.accountType_username = accountType_username;
     }
@@ -42,12 +40,5 @@ public class accounts {
         this.username = username;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
 
 }

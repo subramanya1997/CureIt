@@ -76,7 +76,7 @@ public class setappointment extends AppCompatActivity {
 
     private void searchDoctors(String searchText){
 
-        Query firebaseSearchQuery = mDatabase.orderByChild( "accountType_username" ).startAt( "General_@" + searchText ).endAt( "General_@" + searchText + "\uf8ff");
+        Query firebaseSearchQuery = mDatabase.orderByChild( "accountType_username" ).startAt( "Doctor_@" + searchText ).endAt( "General_@" + searchText + "\uf8ff");
 
         FirebaseRecyclerOptions<accounts> options = new FirebaseRecyclerOptions.Builder<accounts>()
                 .setQuery(firebaseSearchQuery, accounts.class)
@@ -94,8 +94,8 @@ public class setappointment extends AppCompatActivity {
                         holder.mView.setOnClickListener( new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent singleReportIntent = new Intent( setappointment.this, doctor_Profile.class );
-                                singleReportIntent.putExtra( "recordID", doctorsProfile );
+                                Intent singleReportIntent = new Intent( setappointment.this, doctors_profile.class );
+                                singleReportIntent.putExtra( "doctorsID", doctorsProfile );
                                 startActivity( singleReportIntent );
                             }
                         } );
@@ -120,38 +120,44 @@ public class setappointment extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /*
-        Query firebaseSearchQuery = mDatabase.orderByChild( "username" ).startAt( "@t" );
 
+        DatabaseReference mAppointment = FirebaseDatabase.getInstance().getReference().child( "Appointment" );
         FirebaseRecyclerOptions<accounts> options = new FirebaseRecyclerOptions.Builder<accounts>()
-                .setQuery(firebaseSearchQuery, accounts.class)
+                .setQuery(mAppointment, accounts.class)
                 .build();
 
-        FirebaseRecyclerAdapter<accounts, accountViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<accounts, accountViewHolder>(
-                options
-        ) {
-            @Override
-            protected void onBindViewHolder(@NonNull accountViewHolder holder, int position, @NonNull accounts model) {
+        FirebaseRecyclerAdapter<accounts, accountViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<accounts, accountViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull accountViewHolder holder, int position, @NonNull accounts model) {
 
-                holder.setUsername( model.getUsername() );
+                        final String doctorsProfile = getRef( position ).getKey();
 
-            }
+                        holder.setFullName( model.getFullName() );
 
-            @NonNull
-            @Override
-            public accountViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View view = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.profile_layout, viewGroup, false);
+                        holder.mView.setOnClickListener( new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent singleReportIntent = new Intent( setappointment.this, doctors_profile.class );
+                                singleReportIntent.putExtra( "doctorsID", doctorsProfile );
+                                startActivity( singleReportIntent );
+                            }
+                        } );
+                    }
+
+                    @NonNull
+                    @Override
+                    public accountViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                        View view = LayoutInflater.from(viewGroup.getContext())
+                                .inflate(R.layout.profile_layout, viewGroup, false);
 
 
-                return new accountViewHolder( view );
-            }
-        };
+                        return new accountViewHolder( view );
+                    }
+                };
 
         firebaseRecyclerAdapter.startListening();
         mSearchField.setAdapter( firebaseRecyclerAdapter );
-        */
-
     }
 
     public static class accountViewHolder extends RecyclerView.ViewHolder {

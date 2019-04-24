@@ -12,9 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".doctor_Profile"
-            android:label="@string/title_activity_doctor__profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".doctors_profile"
+            android:theme="@style/dashboardStyle" />
         <activity android:name=".recordSingleActivity" />
         <activity android:name=".add_records" />
         <activity
