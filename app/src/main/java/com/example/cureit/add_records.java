@@ -3,19 +3,34 @@ package com.example.cureit;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -28,6 +43,7 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
     private FloatingActionButton mDoneAddRecord;
     private static final int GALLERY_REQUEST = 1;
     private ProgressDialog mProgress;
+
 
     Uri imageUri = null;
 
@@ -43,8 +59,6 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
         mDescription  = (EditText) findViewById( R.id.doctorName );
         mDate = (TextView) findViewById( R.id.dateOfRecord );
         mDoneAddRecord = (FloatingActionButton) findViewById( R.id.doneAddRecordButton );
-
-
         mDoneAddRecord.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +84,7 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
 
             }
         } );
+
     }
 
     @Override
@@ -104,4 +119,5 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
 
         mProgress.dismiss();
     }
+
 }
