@@ -17,8 +17,13 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
@@ -26,6 +31,7 @@ import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecogniz
 import com.example.cureit.common.FrameMetadata;
 import com.example.cureit.common.GraphicOverlay;
 import com.example.cureit.VisionProcessorBase;
+import com.example.cureit.add_records;
 
 import java.util.List;
 
@@ -38,14 +44,29 @@ public class CloudDocumentTextRecognitionProcessor
     private static final String TAG = "CloudDocTextRecProc";
 
     private final FirebaseVisionDocumentTextRecognizer detector;
+    String record_uid;
+
+    private DatabaseReference mDatabase;
+    private String user_id;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCureentUser;
 
     public CloudDocumentTextRecognitionProcessor() {
         super();
         detector = FirebaseVision.getInstance().getCloudDocumentTextRecognizer();
+
+    }
+
+    public void setTemp (String temp){
+        this.record_uid = temp;
     }
 
     @Override
     protected Task<FirebaseVisionDocumentText> detectInImage(FirebaseVisionImage image) {
+        mAuth = FirebaseAuth.getInstance();
+        mCureentUser = mAuth.getCurrentUser();
+        user_id = mCureentUser.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child( "Records" ).child( user_id ).child( record_uid );
         return detector.processImage(image);
     }
 
@@ -56,7 +77,9 @@ public class CloudDocumentTextRecognitionProcessor
             @NonNull FrameMetadata frameMetadata,
             @NonNull GraphicOverlay graphicOverlay) {
         graphicOverlay.clear();
-        Log.d(TAG, "detected text is: " + text.getText());
+
+        mDatabase.child( "prescription_Text" ).setValue( text.getText() );
+
         List<FirebaseVisionDocumentText.Block> blocks = text.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             List<FirebaseVisionDocumentText.Paragraph> paragraphs = blocks.get(i).getParagraphs();
@@ -65,7 +88,7 @@ public class CloudDocumentTextRecognitionProcessor
                 for (int l = 0; l < words.size(); l++) {
                     List<FirebaseVisionDocumentText.Symbol> symbols = words.get(l).getSymbols();
                     for (int m = 0; m < symbols.size(); m++) {
-                        Log.v( "aaa", symbols.get( m ).toString() );
+                        Log.v( "aaa", "1" );
                     }
                 }
             }

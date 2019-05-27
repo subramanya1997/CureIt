@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 
 public class dashboard extends AppCompatActivity {
 
-    private CardView mMedicalRecordsButton, mDoctorsButton, mRenewMedicinesButton, mSetAppointmentsButton;
+    private CardView mMedicalRecordsButton, mDoctorsButton, mRenewMedicinesButton, mSetAppointmentsButton, mPatientButton;
     private FloatingActionButton mAddAlarmButton;
     private LinearLayout mProfilePicture;
     private ImageView mPicture;
@@ -53,6 +53,9 @@ public class dashboard extends AppCompatActivity {
             }
         };
 
+        mPatientButton = (CardView) findViewById( R.id.setPatientButton );
+        mSetAppointmentsButton = (CardView) findViewById( R.id.setAppointmentsButton );
+
         mCureentUser = mAuth.getCurrentUser();
         user_id = mCureentUser.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( user_id );
@@ -61,14 +64,21 @@ public class dashboard extends AppCompatActivity {
         mProfilePicture = (LinearLayout) findViewById( R.id.profilePicture );
         mPicture = (ImageView) findViewById( R.id.picture ) ;
 
+
         //Assign or set Username
         mDatabase.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = dataSnapshot.child( "username" ).getValue(String.class);
                 String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
+                String accountType = dataSnapshot.child( "accountType" ).getValue(String.class);
                 mUsername.setText( username );
                 Picasso.get().load( profilepicture ).fit().centerCrop().into( mPicture );
+                if (accountType != "Doctor" || accountType != "doctor" || accountType != "DOCTOR" ){
+                    mPatientButton.setVisibility( View.GONE );
+                }else {
+                    mSetAppointmentsButton.setVisibility( View.GONE );
+                }
             }
 
             @Override
@@ -81,10 +91,12 @@ public class dashboard extends AppCompatActivity {
         mMedicalRecordsButton = (CardView) findViewById( R.id.medicalRecordsButton );
         mDoctorsButton = (CardView) findViewById( R.id.doctorsButton );
         mRenewMedicinesButton = (CardView) findViewById( R.id.renewMedicinesButton );
-        mSetAppointmentsButton = (CardView) findViewById( R.id.setAppointmentsButton );
+
         mAddAlarmButton = (FloatingActionButton ) findViewById( R.id.addAlarmButton );
 
-        // On click of each of the buttons
+
+
+                // On click of each of the buttons
         mProfilePicture.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +138,14 @@ public class dashboard extends AppCompatActivity {
                 startActivity( new Intent(dashboard.this, setalarm.class) );
             }
         } );
+
+        mPatientButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(dashboard.this, patients.class) );
+            }
+        } );
+
 
     }
 }
