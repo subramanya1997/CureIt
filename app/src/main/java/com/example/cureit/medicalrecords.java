@@ -38,7 +38,7 @@ public class medicalrecords extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCureentUser = mAuth.getCurrentUser();
-        user_id = mCureentUser.getUid();
+        user_id = getIntent().getExtras().getString("userID" );
         mDatabase = FirebaseDatabase.getInstance().getReference().child( "Records" ).child( user_id );
 
         mRecordList = (RecyclerView) findViewById( R.id.recordList );
@@ -52,7 +52,9 @@ public class medicalrecords extends AppCompatActivity {
         mAddRecords.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(medicalrecords.this, add_records.class) );
+                Intent singleReportIntent = new Intent( medicalrecords.this, add_records.class );
+                singleReportIntent.putExtra( "userID", user_id );
+                startActivity( singleReportIntent );
             }
         } );
     }
@@ -83,6 +85,7 @@ public class medicalrecords extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent singleReportIntent = new Intent( medicalrecords.this, recordSingleActivity.class );
                         singleReportIntent.putExtra( "recordID", recordKey );
+                        singleReportIntent.putExtra( "userID", user_id );
                         startActivity( singleReportIntent );
                     }
                 } );

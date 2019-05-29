@@ -71,13 +71,11 @@ public class dashboard extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = dataSnapshot.child( "username" ).getValue(String.class);
                 String profilepicture = dataSnapshot.child( "profilePicture" ).getValue(String.class);
-                String accountType = dataSnapshot.child( "accountType" ).getValue(String.class);
+                String accountType = dataSnapshot.child( "accountType" ).getValue(String.class).trim();
                 mUsername.setText( username );
                 Picasso.get().load( profilepicture ).fit().centerCrop().into( mPicture );
-                if (accountType != "Doctor" || accountType != "doctor" || accountType != "DOCTOR" ){
+                if (!accountType.contentEquals( "Doctor" )){
                     mPatientButton.setVisibility( View.GONE );
-                }else {
-                    mSetAppointmentsButton.setVisibility( View.GONE );
                 }
             }
 
@@ -107,7 +105,9 @@ public class dashboard extends AppCompatActivity {
         mMedicalRecordsButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(dashboard.this, medicalrecords.class) );
+                Intent singleReportIntent = new Intent( dashboard.this, medicalrecords.class );
+                singleReportIntent.putExtra( "userID", user_id );
+                startActivity( singleReportIntent );
             }
         } );
 

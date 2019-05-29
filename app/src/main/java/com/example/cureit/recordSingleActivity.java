@@ -33,7 +33,7 @@ public class recordSingleActivity extends AppCompatActivity {
         //User Data
         mAuth = FirebaseAuth.getInstance();
         mCureentUser = mAuth.getCurrentUser();
-        user_id = mCureentUser.getUid();
+        user_id = getIntent().getExtras().getString("userID");
         mDatabase = FirebaseDatabase.getInstance().getReference().child( "Records" ).child( user_id ).child( recordID );
 
         mDescriptionText = (TextView) findViewById( R.id.descriptionText );

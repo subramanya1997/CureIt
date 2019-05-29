@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +38,7 @@ public class doctors_profile extends AppCompatActivity {
 
     private ProgressDialog mProgress;
 
-    private DatabaseReference mDatabase, mDocDatabase;
+    private DatabaseReference mDatabase, mDocDatabase, mUserData;
     private FirebaseAuth mAuth;
     private FirebaseUser mCureentUser;
 
@@ -117,6 +118,23 @@ public class doctors_profile extends AppCompatActivity {
             }
         } );
 
+        mUserData = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( user_id );
+
+        mUserData.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                username = dataSnapshot.child( "username" ).getValue(String.class);
+                fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
+                accountType_username = dataSnapshot.child( "accountType_username" ).getValue(String.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+
     }
 
     private void getAppointment(){
@@ -126,22 +144,6 @@ public class doctors_profile extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat( "HH:mm:ss" );
         String currentTime = format.format( calendar.getTime() );
-
-        DatabaseReference mUserData = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( user_id );
-
-        mUserData.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                username = dataSnapshot.child( "username" ).getValue(String.class);
-                fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
-                accountType_username = dataSnapshot.child( "accountType_username" ).getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
 
         if (mAppointment.getText() == "Get Appointment"){
             mDatabase.child( doctorsID ).child( user_id ).child( "currentTime" ).setValue( currentTime );

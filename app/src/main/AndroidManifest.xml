@@ -3,6 +3,10 @@
     package="com.example.cureit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,7 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".patients"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCFvgFMc-HzeLOryxfbinrhFyzYy--N_tI" />
+
+        <activity
+            android:name=".map"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".patient_profile" />
+        <activity android:name=".patients" />
         <activity
             android:name=".doctors_profile"
             android:theme="@style/dashboardStyle" />

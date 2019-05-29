@@ -6,4 +6,5 @@
         <item>Female</item>
     </string-array>
     <string name="title_activity_doctor__profile">doctor_Profile</string>
+    <string name="title_activity_map">map</string>
 </resources>

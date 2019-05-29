@@ -57,15 +57,16 @@ public class CloudDocumentTextRecognitionProcessor
 
     }
 
-    public void setTemp (String temp){
+    public void setTemp (String temp, String userid){
         this.record_uid = temp;
+        this.user_id = userid;
     }
 
     @Override
     protected Task<FirebaseVisionDocumentText> detectInImage(FirebaseVisionImage image) {
         mAuth = FirebaseAuth.getInstance();
         mCureentUser = mAuth.getCurrentUser();
-        user_id = mCureentUser.getUid();
+        //user_id = mCureentUser.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child( "Records" ).child( user_id ).child( record_uid );
         return detector.processImage(image);
     }
@@ -88,7 +89,8 @@ public class CloudDocumentTextRecognitionProcessor
                 for (int l = 0; l < words.size(); l++) {
                     List<FirebaseVisionDocumentText.Symbol> symbols = words.get(l).getSymbols();
                     for (int m = 0; m < symbols.size(); m++) {
-                        Log.v( "aaa", "1" );
+                        Log.v( "aaaaaaaaaa", symbols.get( m ).getText() );
+                        Log.v( "aaaaaaaaaa", "1" );
                     }
                 }
             }

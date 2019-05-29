@@ -32,8 +32,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
@@ -79,10 +82,10 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
 
     Uri imageUri = null;
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, mDatabaseCur;
     private String user_id;
     private FirebaseAuth mAuth;
-    private FirebaseUser mCureentUser;
+    private String mCureentUserID;
     private StorageReference mStorage;
     String record_uid;
 
@@ -94,15 +97,16 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
         mProgress = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
-        mCureentUser = mAuth.getCurrentUser();
-        user_id = mCureentUser.getUid();
+        mCureentUserID = mAuth.getCurrentUser().getUid();
+        user_id = getIntent().getExtras().getString("userID" );
+        mDatabaseCur = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( mCureentUserID );
         mDatabase = FirebaseDatabase.getInstance().getReference().child( "Records" ).child( user_id ).push();
         mStorage = FirebaseStorage.getInstance().getReference();
         record_uid = mDatabase.getKey();
 
         mPrescription = (ImageView) findViewById( R.id.prescription );
         mDoctorsName  = (EditText) findViewById( R.id.doctorName );
-        mDescription  = (EditText) findViewById( R.id.doctorName );
+        mDescription  = (EditText) findViewById( R.id.description );
         mDate = (TextView) findViewById( R.id.dateOfRecord );
         mDoneAddRecord = (FloatingActionButton) findViewById( R.id.doneAddRecordButton );
         mDoneAddRecord.setOnClickListener( new View.OnClickListener() {
@@ -131,10 +135,29 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
             }
         } );
 
+        mDatabaseCur.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!user_id.contentEquals(mCureentUserID)){
+                    String fullname = dataSnapshot.child( "fullName" ).getValue(String.class);
+                    mDoctorsName.setText( fullname );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+
+        Calendar calendar =  Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format( calendar.getTime() );
+        mDate.setText( currentDate );
+
         graphicOverlay = (GraphicOverlay) findViewById(R.id.previewOverlay);
 
         imageProcessor = new CloudDocumentTextRecognitionProcessor();
-        ((CloudDocumentTextRecognitionProcessor) imageProcessor).setTemp( record_uid );
+        ((CloudDocumentTextRecognitionProcessor) imageProcessor).setTemp( record_uid, user_id );
         isLandScape =
                 (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
 
@@ -199,7 +222,9 @@ public class add_records extends AppCompatActivity implements DatePickerDialog.O
                         record.child( "doctorsName" ).setValue( doctorsName );
                         record.child( "date" ).setValue( date );
 
-                        startActivity(new Intent( add_records.this, medicalrecords.class ) );
+                        Intent singleReportIntent = new Intent( add_records.this, medicalrecords.class );
+                        singleReportIntent.putExtra( "userID", user_id );
+                        startActivity( singleReportIntent );
 
                         mProgress.dismiss();
 
