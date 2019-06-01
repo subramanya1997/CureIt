@@ -78,13 +78,13 @@ public class doctors_profile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild( doctorsID )){
                     if (!dataSnapshot.hasChild( user_id )){
-                        mAppointment.setText( "Get Appointment" );
+                        mAppointment.setText( "Give Access" );
                     }
                     else{
-                        mAppointment.setText( "Cancel Appointment" );
+                        mAppointment.setText( "Cancel Access" );
                     }
                 }else {
-                    mAppointment.setText( "Cancel Appointment" );
+                    mAppointment.setText( "Cancel Access" );
                 }
             }
 
@@ -145,7 +145,7 @@ public class doctors_profile extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat( "HH:mm:ss" );
         String currentTime = format.format( calendar.getTime() );
 
-        if (mAppointment.getText() == "Get Appointment"){
+        if (mAppointment.getText() == "Give Access"){
             mDatabase.child( doctorsID ).child( user_id ).child( "currentTime" ).setValue( currentTime );
             mDatabase.child( doctorsID ).child( user_id ).child( "username" ).setValue( username );
             mDatabase.child( doctorsID ).child( user_id ).child( "accountType_username" ).setValue( accountType_username );
