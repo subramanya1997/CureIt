@@ -79,7 +79,35 @@ public class CloudDocumentTextRecognitionProcessor
             @NonNull GraphicOverlay graphicOverlay) {
         graphicOverlay.clear();
 
-        mDatabase.child( "prescription_Text" ).setValue( text.getText() );
+
+        String temp = text.getText();
+
+        String medName = new String();
+        String medTime = new String();
+        String medQty = new String();
+        int currentIndex=0;
+        int tempStart = 0;
+        while(currentIndex < temp.length()-2)
+        {
+            if( Character.isWhitespace(temp.charAt(currentIndex)) && Character.isDigit(temp.charAt(currentIndex+1)))
+            {
+                medName = medName.concat(temp.substring(tempStart,currentIndex));
+                medName = medName.concat("\n");
+                medTime = medTime.concat(temp.substring(currentIndex+1,currentIndex+6));
+                medTime = medTime.concat("\n");
+                medQty = medQty.concat(temp.substring(currentIndex+8,currentIndex+10));
+                medQty = medQty.concat("\n");
+
+                currentIndex++;
+                tempStart = currentIndex+11;
+
+            }
+
+            currentIndex++;
+        }
+
+        String temp1 = "Medicine Name: " + medName + "\n" + "Quantity: " + medQty +"\n" + "----- x -----\n" + text.getText();
+        mDatabase.child( "prescription_Text" ).setValue( temp1 );
 
         List<FirebaseVisionDocumentText.Block> blocks = text.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
@@ -89,8 +117,7 @@ public class CloudDocumentTextRecognitionProcessor
                 for (int l = 0; l < words.size(); l++) {
                     List<FirebaseVisionDocumentText.Symbol> symbols = words.get(l).getSymbols();
                     for (int m = 0; m < symbols.size(); m++) {
-                        Log.v( "aaaaaaaaaa", symbols.get( m ).getText() );
-                        Log.v( "aaaaaaaaaa", "1" );
+                        //
                     }
                 }
             }

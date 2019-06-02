@@ -88,7 +88,7 @@ public class dashboard extends AppCompatActivity {
 
         mMedicalRecordsButton = (CardView) findViewById( R.id.medicalRecordsButton );
         mDoctorsButton = (CardView) findViewById( R.id.doctorsButton );
-        mRenewMedicinesButton = (CardView) findViewById( R.id.renewMedicinesButton );
+        //mRenewMedicinesButton = (CardView) findViewById( R.id.renewMedicinesButton );
 
         mAddAlarmButton = (FloatingActionButton ) findViewById( R.id.addAlarmButton );
 
@@ -118,12 +118,13 @@ public class dashboard extends AppCompatActivity {
             }
         } );
 
+        /*
         mRenewMedicinesButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity( new Intent(dashboard.this, renewmedicines.class) );
             }
-        } );
+        } );*/
 
         mSetAppointmentsButton.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -131,6 +132,7 @@ public class dashboard extends AppCompatActivity {
                 startActivity( new Intent(dashboard.this, setappointment.class) );
             }
         } );
+
 
         mAddAlarmButton.setOnClickListener( new View.OnClickListener() {
             @Override
