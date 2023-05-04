@@ -1,7 +1,7 @@
 # CureIt
 Medical record management system.
 
-#Features
+## Features
 1. Different accounts for doctor and patient.
 2. Handwriting recognition. (Google cloud vision api)
 3. Make appointments. (Firebase messaging(notifications) system.)
